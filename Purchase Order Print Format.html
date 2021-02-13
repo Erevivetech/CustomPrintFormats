@@ -1,0 +1,85 @@
+<h4><b>ORIGINAL COPY</b></h4>
+ 
+<table width=100% border=1>
+   <tr>
+       <td>
+           <center><h4>Purchase Order</h4></center>
+        </td>
+    </tr>
+</table> 
+<table width=100% border=1>
+    <tr>
+          <td rowspan="6"><b>Supplier Name and Address:</b><br>{{ doc.supplier_name }}<br>{{ doc.address_display}}<br><b>Supplier GSTIN : </b> {{ doc.supplier_gstin }}<br></td>
+        <!--  <td><b> Purchase Order No: </b></td>
+          <td><b> Purchase Order Date: </b></td>
+          <td><b> Delivery Due Date: </b></td>
+          <td><b> Our GSTIN: </b></td>
+          <td><b> Place of Supply: </b></td> -->
+    </tr> 
+    <tr><td><b> Purchase Order No: </b></td><td><b> {{ doc.name }} </b></td></tr>
+    <tr><td><b> Purchase Order Date: </b></td><td><b> {{ doc.transaction_date }} </b></td></tr>
+    <tr><td><b> Delivery Due Date: </b></td><td><b> {{ doc.schedule_date }} </b></td></tr>
+    <tr><td><b> Our GSTIN: </b></td><td><b> {{ doc.company_gstin }} </b></td></tr>
+    <tr><td><b> Place of Supply: </b></td><td><b>  </b></td></tr>
+ </table>
+<table width=100% style="border:1px solid #000; border-collapse: collapse;">
+        <tr >
+            <td style="text-align:left;" width=50%>
+                <b> Bill To: </b><br>
+                {{ doc.billing_address_display }}
+            </td>
+            <td style="text-align:left;" width=50%>
+                <b> Ship To: </b><br>
+                {{ doc.shipping_address_display }}
+            </td>
+        </tr>
+</table> 
+ 
+<table width=100% style="border:1px solid #000; border-collapse: collapse;">
+    <tr>
+       <td style="text-align:left; border:1px solid #000; border-top: none; border-bottom: 1;" width=40%><b>Item Names/Services</b></td>
+       <td style="text-align:center; border:1px solid #000; border-top: none; border-bottom: 1;" width=7%><b>HSN/SAC</b></td>
+       <td style="text-align:center; border:1px solid #000; border-top: none; border-bottom: 1;" width=13%><b>Qty</b></td>  
+       <td style="text-align:center; border:1px solid #000; border-top: none; border-bottom: 1;" width=12%><b>Price(Rs)</b></td>
+       <td style="text-align:center; border:1px solid #000; border-top: none; border-bottom: 1;" width=12%><b>Total(RS)</b> </td>
+       <td style="text-align:center; border:1px solid #000; border-top: none; border-bottom: 1;" width=16%><b>Tax(rs)</b></td>
+    </tr>
+	{%- for item in doc.items -%}
+			<tr>
+				     <td style="text-align:left; border:1px solid #000; border-top: none; border-bottom: none;" width=40% >{{ loop.index }}&nbsp;&nbsp;{{item.item_name}}</td>
+				     <td style="text-align:center; border:1px solid #000; border-top: none; border-bottom: none;" width=7%>{{item.gst_hsn_code}}</td>
+				     <td style="text-align:right; border:1px solid #000; border-top: none; border-bottom: none;" width=13%>{{item.qty}} &nbsp;{{item.uom}}</td>
+				     <td style="text-align:right; border:1px solid #000; border-top: none; border-bottom: none;" width=12%>{{item.rate}}</td>
+				     <td style="text-align:right; border:1px solid #000; border-top: none; border-bottom: none;" width=12%>{{item.amount}}</td>
+				     <td style="text-align:right; border:1px solid #000; border-top: none; border-bottom: none;" width=16%></td>
+			    </tr>
+			{%- endfor -%}
+</table>
+
+
+<table width=100% border=1>		    
+		
+	<tr><td style="text-align:right;" width=80% colspan = "5"><b>Sub Total:</b></td><td >{{ doc.base_total }}</td></tr>
+	{%- for taxes in doc.taxes -%}
+				<tr><td style="text-align:right;" width=80% colspan = "5"><b>{{ taxes.description }}</b></td><td>{{ taxes.base_tax_amount }}</td>
+		</tr>
+		{%- endfor -%}
+		<tr><td style="text-align:right;" width=80% colspan = "5"><b>Tax Sub Total:</b></td><td>{{ doc.total_taxes_and_charges }}</td></tr>
+		<tr><td style="text-align:right;" width=80% colspan = "5"><b>Final Total:</b></td><td>{{ doc.rounded_total }}</td></tr>
+		<tr><td style="text-align:right;" width=80% colspan = "6"><b>{{ doc.in_words }}</b></td></tr>
+</table>
+<div style="text-align:right;"><b><br><br><br>For{{ doc.company }}<br><br>Authorized Signatory</b></div>
+<table>
+    <tr><td><b>Terms and Conditions</b></td></tr>
+    {%- for payment_schedule in doc.payment_schedule -%}
+    <tr><td>Delivery:&nbsp;&nbsp;{{ payment_schedule.description }}</td></tr>
+    <tr><td>Transportation:&nbsp;&nbsp;{{ payment_schedule.due_date }}</td></tr>
+    <tr><td>Payment:&nbsp;&nbsp;{{ payment_schedule.payment_term }}</td></tr>
+    {%- endfor -%}
+</table>
+
+
+
+
+
+

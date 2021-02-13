@@ -1,0 +1,47 @@
+        <h2><center><h4>Stock Receipt</h4></center></h2>
+
+<table width=100% style="border:0px solid #000; border-collapse: collapse;">
+     <tr>
+         <td style="text-align:left;" width=50%>
+             <b>Warehouse Name and Address :&nbsp;&nbsp;</b><br>
+             {{ doc.shipping_address_display}}<br>
+             <b>Supplier Name and Address :&nbsp;&nbsp;</b> <br>
+             {{ doc.supplier_name}}
+         </td>
+         <td style="text-align:right;" width=25%>
+             <b>Receipt No :</b><br>
+             <b>PR Number :</b><br>
+             <b>PO Number :</b><br>
+             <b>Status :</b><br>
+             <b>Create By :</b><br>
+             <b>Approved By :</b><br>
+             <b>Approved Date :</b><br>
+         </td>
+          <td style="text-align:left;" width=25%>
+              
+               <br>
+         </td>
+     </tr>
+ </table>
+<table width=100% border="1" >
+   <tr>
+       <td width=65%>
+           <b>Item Names/Services</b>
+        </td>
+        <td style="text-align:center;" width=15%>
+            <b>HSN/SAC</b>
+        </td>
+        <td style="text-align:center;" width=20%>
+            <b>Qty</b>
+        </td>
+    </tr>
+
+			{%- for item in doc.items -%}
+				<tr> 
+				     <td> {{item.item_name}}</td>
+				     <td> {{item.gst_hsn_code}}</td>
+				     <td> {{item.qty}} &nbsp;&nbsp; {{item.uom}}</td>
+			    </tr>
+			{%- endfor -%}
+	
+</table>   

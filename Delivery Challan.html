@@ -1,0 +1,94 @@
+<table width=100% border=1>
+    <tr>
+        <td>
+            <center><h4>DELEVERY CHALLAN</h4></center>
+         </td>
+     </tr>
+ 
+ </table>       
+ <table width=100% border=1>
+      <tr>
+          <td style="text-align:left;" rowspan="2" width=50%>
+              {{ doc.company }}<br>
+              {{ doc.company_address_display }}<br>
+          </td>
+          <td style="text-align:left;" >
+              <b>D.C. No. </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Date</b><br>
+              {{ doc.name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ doc.posting_date }}<br>
+          </td>
+      </tr>
+      <tr>
+          <td width=50% >
+              <b>To,</b><br>
+              {{ doc.customer_name }}
+              {{doc.address_display }}
+          </td>
+      </tr>
+     
+ </table>
+ <table width=100% border=1>
+     <tr><td style="text-align:center;"> PIAN DOOR DELIVERY </td></tr>
+ </table>
+ <table width=100% border="1" >
+    <tr>
+        <td width=2%>
+            <b>SR.</b>
+            <b>NO</b>
+         </td>
+        <td width=48%>
+            <b>DESCRIPTION OF GOODS</b>
+         </td>
+         <td style="text-align:center;" width=10%>
+             <b>QTY</b>
+         </td>
+         <td style="text-align:center;" width=15%>
+             <b>RATE</b>
+         </td>
+         <td style="text-align:center;" width=10%>
+             <b>PER</b>
+         </td>
+         <td style="text-align:center;" width=15%>
+             <b>AMOUNT</b>
+         </td>
+     </tr>
+ 
+             {%- for item in doc.items -%}
+                 <tr> 
+                     <td>{{ loop.index }}</td>
+                      <td> {{item.item_name}}</td>
+                      <td style="text-align:center;"> {{item.qty}}</td>
+                      <td style="text-align:center;"> {{item.rate}}</td>
+                      <td style="text-align:center;"> {{item.uom}}</td>
+                      <td style="text-align:center;"> {{item.amount}}</td>
+                 </tr>
+             {%- endfor -%}
+     <tr height="30">
+         <td></td><td></td><td></td><td></td><td></td><td></td>
+     </tr>
+     <tr height="30" >
+         <td></td><td></td><td></td><td></td><td></td><td style="text-align:center;"><b>₹</b>{{ doc.base_grand_total }}</td>
+     </tr>
+     <tr height="40" >
+         <td colspan="6">Amount Chargeable (in words)<br> {{ doc.base_in_words }}</td>
+     </tr>
+ </table>  
+ 
+ <table width=100% style="border:1px solid #000; border-collapse: collapse;">
+     <tr height="100" style="text-align:left;" >
+         <td style="text-align:left; border-top: none; border-bottom: 1;" colspan="5"><br>USED AS A SAMPLE AND <br>RETURNING THE SAME</td>
+         <td style="text-align:right; border-top: none; border-bottom: 1;" colspan="5"></td></tr>
+     <tr height="100" style="text-align:left;" >
+         <td style="text-align:left; border-top: none; border-bottom: 1;" colspan="5"></td> 
+         <td style="text-align:right; border-top: none; border-bottom: 1;" colspan="5">for Geolife Agritech India Pvt.Ltd.<br><br><br>Authorised Signatory
+     </td></tr>
+     
+ </table>	
+ <table width=100% border=1> <tr><td style="text-align:center;"><b>SUBJECT TO MUMBAI JURISDICTION</b> </td></tr></table>
+     
+     
+  
+ 
+ 
+ 
+ 
+ 
