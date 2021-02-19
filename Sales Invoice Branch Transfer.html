@@ -1,0 +1,138 @@
+<center><h3>Tax Invoice</h3><center>
+<table width=100% height=30% border=1>
+   <tr>
+       <td width=50% rowspan=3>
+           <strong>{{ doc.company or "" }}</strong><br>
+           {{ frappe.db.get_value("Company", doc.company, "registration_details") or "" }}
+           {{ doc.company_address_display }} 
+           {{ doc.company_gstin }}
+       </td>
+       <td width=25%>
+           Invoice No.<br>
+           <b>{{ doc.name }}</b>
+       </td>
+       <td width=25%>
+           Dated<br>
+	   <b>{{ frappe.utils.formatdate(doc.posting_date) }}</b>
+       </td>
+   </tr>
+   <tr>
+       <td width=25%>
+           Delivery Note<br>
+	   <b>&nbsp;</b>
+       </td>
+       <td width=25%>
+           Mode/Terms of Payment<br>
+	   <b>&nbsp;</b>
+       </td>
+   </tr>
+   <tr>
+       <td width=25%>
+           Supplier's Ref.<br>
+	   <b>&nbsp;</b>
+       </td>
+       <td width=25%>
+           Other Reference(s)<br>
+	   <b>&nbsp;</b>
+       </td>
+   </tr>
+   <tr>
+       <td width=50% rowspan=4>
+           <i>Customer</i><br>
+           <strong>{{ doc.customer_name or "" }}</strong><br>
+	   {{ doc.address_display or "" }}
+       </td>
+       <td width=25%>
+           Buyer's Order No.<br>
+	   <b>&nbsp;</b>
+       </td>
+       <td width=25%>
+           Dated<br>
+	   <b>&nbsp;</b>
+       </td>
+   </tr>
+   <tr>
+       <td width=25%>
+           Despatch Document No.<br>
+	   <b>&nbsp;</b>
+       </td>
+       <td width=25%>
+           Dated<br>
+	   <b>&nbsp;</b>
+       </td>
+   </tr>
+   <tr>
+       <td width=25%>
+           Despatched through<br>
+           {{ doc.transporter_name }}
+	   <b>&nbsp;</b>
+       </td>
+       <td width=25%>
+           Destination<br>
+	   <b>&nbsp;</b>
+       </td>
+   </tr>
+   <tr>
+       <td width=25% height=100 colspan=2>
+           Terms of Delivery<br>
+	   <b>&nbsp;</b>
+       </td>
+   </tr>
+</table>
+<TABLE cellpadding=0 cellspacing=0 width=100% height=100% border=1 style="border:1px solid #000; border-collapse: collapse;">
+<TR>
+	<TH WIDTH=1%>Sl</TH>
+	<TH WIDHTH=49%>Description of Goods</TH>
+	<TH WIDTH=8%>HSN/SAC</TH>
+	<TH WIDTH=12%>Quantity</TH>
+	<TH WIDTH=12%>Rate</TH>
+	<TH WIDTH=5%>Per</TH>
+	<TH WIDTH=13%>Amount</TH>
+</TR>
+
+{% for item in doc.items %}
+{% set remrows = 10 - loop.revindex %}
+<TR>
+	<TD style="text-align:left; border:1px solid #000; border-top: none; border-bottom: none;">{{ loop.index }}</TD>
+	<TD style="text-align:left; border:1px solid #000; border-top: none; border-bottom: none;">{{ item.item_name }}<br> {{ item.batch_no }} <br> {{ frappe.utils.formatdate(item.expiry_date) }}</TD>
+	<TD style="text-align:left; border:1px solid #000; border-top: none; border-bottom: none;"> {{ item.gst_hsn_code }}</TD>
+	<TD style="text-align:center; border:1px solid #000; border-top: none; border-bottom: none;">{{ item.get_formatted("qty", 0) }} {{ item.uom }}</TD>
+	<TD style="text-align:right; border:1px solid #000; border-top: none; border-bottom: none;">{{ item.get_formatted("rate", doc) }}</TD>
+	<TD style="text-align:center; border:1px solid #000; border-top: none; border-bottom: none;" >{{ item.uom }}    </TD>
+	<TD style="text-align:right; border:1px solid #000; border-top: none; border-bottom: none;">{{ item.get_formatted("amount", doc) }}</TD>
+
+</TR>
+{% endfor %}
+<TR>
+	<TD WIDTH=1%></TD>
+	<TD WIDHTH=49%>Total</TD>
+	<TD WIDTH=8%><TD>
+	<TD WIDTH=12%></TD>
+	<TD WIDTH=12%>{{ doc.total_qty }}</TD>
+	<TD WIDTH=5%>{{ doc.get_formatted("total", doc) }}</TD>
+
+</TR>
+</TABLE>
+<TABLE cellpadding=0 cellspacing=0 width=100% border=1>
+    <TR>
+        <TD colspan=6 WIDTH=13% align=left >
+            
+            Amount Chargebale(inword)<br><B>{{ doc.in_words }}</B> 
+        </TD>
+    </TR>
+</TABLE>
+<TABLE cellpadding=0 cellspacing=0 width=100% border=1>
+
+<TR WIDHTH=100%><TD COLSPAN=6> {{ doc.other_charges_calculation }}</TD></TR>
+<TR WIDHTH=100%><TD COLSPAN=5>Total Taxes and Charges (INR)</TD><TD>{{ doc.get_formatted("base_total_taxes_and_charges", doc) }}</TD></TR>
+<TR WIDHTH=100%><TD COLSPAN=5>Total Taxes Amount (INR)</TD><TD>{{ doc.get_formatted("base_grand_total", doc) }}</TD></TR>
+</table>
+<table width=100% style="border:1px solid #000; border-collapse: collapse;">
+    
+<TR WIDHTH=100%><TD COLSPAN=2 style="text-align:left; border:1px solid #000; border-top: none; border-bottom: none;">{{ doc.base_in_words }}</TD></TR>
+
+<TR WIDHTH=100%><TD COLSPAN=2></TD></TR>
+<TR WIDHTH=100%><TD COLSPAN=2 style="text-align:left; border:1px solid #000; border-top: none; border-bottom: none;"></TD></TR>
+<TR WIDHTH=100%><TD>Declaration<br> This Branch Transfer is Against Form "F"</TD><TD style="text-align:left; border:1px solid #000; border-top: 1; border-bottom: none;">{{ doc.company }}</TD></TR>
+
+</TABLE>
