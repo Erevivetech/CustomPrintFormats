@@ -1,0 +1,23 @@
+<!--<div class="print-heading"><h2><center>Tax Invoice</center><br></h2></div>-->
+<table width=100% border=1  style="page-break-after:avoid;">
+     <tr>
+         <td style="text-align:left;"  width=50% >
+             <b style="font-size:15px;">{{ doc.company }}<br></b>
+             {{ doc.company_address_display }}<br>
+             {{ doc.company_trn }}
+         </td>
+         <!--<td style="text-align:left;" width=25%><b>Invoice No.</b><br>{{ doc.name }}</td>-->
+           <td style="text-align:left;"  width=50% >
+             <b>To, </b>
+             <b style="font-size:15px">{{ doc.customer_name or "" }}</b><br>
+             {{doc.address_display or "" }}
+             {{doc.contact_mobile or "" }}<br>
+             {{doc.customer_trn or ""}}
+         </td>
+     </tr>
+     <tr>
+         <td style="text-align:left;" width=50%><b>Date  </b>{{ doc.posting_date }}<br><b>Invoice No. </b>{{ doc.name }}</td>
+         <td style="text-align:left;" width=50%><b>Due Date</b><br>{{ doc.due_date }}</td>
+     </tr>
+    
+</table>
