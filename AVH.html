@@ -1,0 +1,175 @@
+<table class=itable width=100%  border=1 style="border: 1px solid blue; font-family:Arial MT; font-size 10px; border-collapse: collapse;">
+    
+    <tr>
+         <td style="text-align:center; border:1px  solid blue; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" colspan=4><stong style="font-size: 12px; font-family:Arial MT;"><b>TAX INVOICE</b></stong></td>
+     </tr>
+     <tr>
+    <td style="text-align:left; border:1px  solid blue; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=28%><b>Tax Invoice:</b> {{ doc.name }}</td>
+    <td style="text-align:left; border:1px solid blue; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=22%><b>Invoice Date: </b>{{ doc.get_formatted("posting_date", doc) }}  </td>
+    <td style="text-align:left; border:1px solid blue; border-top: 1; border-bottom: 0; border-right: 0; border-left: 1;" width=31% colspan=2><b>Transporter Name: </b>{{ doc.transporter or "" }}</td>
+    
+    </tr>
+    <tr>
+        {% for item in doc.items %}
+        {% if loop.index == 1 -%}
+            <td style="text-align:left; border:1px ; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=28%><b>SO No: </b>{{ item.sales_order or "" }}
+        {%- else %} 
+        
+        {%- endif %}
+        
+        {% endfor %}
+        
+        <td style="text-align:left; border:1px; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=22%><b>SO Date: </b></td>
+        <td style="text-align:left; border:1px solid blue; border-top: 0; border-bottom: 0; border-right: 0; border-left: 1;" width=30%><b>Payment term: </b>{{ doc.payment_terms_template or "" }}</td>
+        <td style="text-align:left; border:1px; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=19%><b>Due Date: </b>{{ doc.get_formatted("due_date", doc) }}</td>
+    </tr>
+    <tr>
+        <td style="text-align:left; border:1px ; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=28%><b>PO No:</b> {{ doc.po_no or "" }}</td>
+        <td style="text-align:left; border:1px; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=22%><b>PO Date: </b>{{ doc.get_formatted("po_date", doc) }}  </td>
+        <td style="text-align:left; border:1px solid blue; border-top: 0; border-bottom: 0; border-right: 0; border-left: 1;" width=30%><b>LR No: </b>{{ doc.lr_no or "" }}</td>
+        <td style="text-align:left; border:1px; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=19%><b>LR Date: </b>{{ doc.get_formatted("lr_date", doc) }}</td>
+        </tr>
+    <tr>
+        <td style="text-align:left; border:1px ; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=28%><b>State: </b>{{ doc.gst_state or "" }}</td>
+        <td style="text-align:left; border:1px; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=22%><b>State Code: </b>{{ doc.company_gst_state_number or "" }} </td>
+        <td style="text-align:left; border:1px solid blue; border-top: 0; border-bottom: 0; border-right: 0; border-left: 1;" width=30%><b>Mode Of Trans: </b>{{ doc.mode_of_transport or "" }}</td>
+        <td style="text-align:left; border:1px solid blue; border-top: 0; border-bottom: 0; border-right: 0; border-left: 0;" width=19%><b>VEH No: </b>{{ doc.vehicle_no or "" }}</td>
+        </tr>
+    <tr>
+    
+    <tr>
+        <td style="text-align:left; border:1px ; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=28%><b>GSTIN: </b>{{ doc.company_gstin or "" }}</td>
+        <td style="text-align:left; border:1px; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=22%><b>PAN:</b> AAHCA8513A </td>
+        <td style="text-align:left; border:1px solid blue; border-top: 0; border-bottom: 0; border-right: 0; border-left: 1;" width=30% colspan="2"><b>Delivery Terms: </b>{{ doc.delivery_terms or "" }}</td>
+        </tr>
+        <tr>
+        <td style="text-align:left; border:1px ; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=28%><b>Invoice Type: </b>{{ doc.gst_category or "" }}</td>
+    <td style="text-align:left; border:1px; border-top: 1; border-bottom: 0; border-right: 0; border-left: 0;" width=22%><b>Reverse Charge: </b>{{ doc.reverse_charge or "" }}  </td>
+    <td style="text-align:left; border:1px solid blue; border-top: 0; border-bottom: 0; border-right: 0; border-left: 1;" width=30% colspan="2"><b>Place Of Supply: </b>{{ doc.place_of_supply or "" }}
+    </td>
+    </tr>
+
+    <tr>
+        <td style="text-align:center;" width=50% colspan=2><b>Details of Receiver(Bill to)</b></td>
+        <td style="text-align:center;" width=50% colspan=2><b>Details of Consignee(Shipped to)</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:left;" width=50% colspan=2><b>Customer Name: {{ doc.customer_name }}<br>Address :</b>{{doc.address_display }}<b>Mobile No: </b>{{ doc.contact_mobile or "" }}<br><b>Email: </b>{{ doc.contact_email or "" }} </td>
+        <td style="text-align:left;" width=50% colspan=2><b>Customer Name: {{ doc.shipping_address_name }}<br>Address :</b>{{doc.shipping_address }}</td>
+    </tr>
+</table>
+
+<!-- Lower Table >
+
+<table border=1 width=100% style="border:1px solid blue; font-family:Arial MT; font-size 10px; border-collapse: collapse;">
+    <TR>
+	<TH style="text-align:center;" WIDTH=7%>Sr No.</TH>
+	<TH style="text-align:center;" WIDHTH=43%>Item Name</TH>
+	
+	<TH style="text-align:center;" WIDTH=10%>HSN </TH>
+	<TH style="text-align:center;" WIDTH=10%>Quantity</TH>
+	<TH style="text-align:center;" WIDTH=15%>Rate (Rs/kg)</TH>
+	<TH style="text-align:center;" WIDTH=15%>Amount (Rs)</TH>
+ </TR>
+ {% for item in doc.items %}
+{% set remrows = 10 - loop.revindex %}
+<TR>
+	<TD style="text-align:center; border:1px solid blue; border-top: 1; border-bottom: 1;">{{ loop.index }}</TD>
+	<TD style="text-align:left; border:1px solid blue; border-top: 1; border-bottom: 1;">{{ item.item_name }}</TD>
+	<TD style="text-align:left; border:1px solid blue; border-top: 1; border-bottom: 1;"> {{ item.gst_hsn_code }}</TD>
+	<TD style="text-align:center; border:1px solid blue; border-top: 1; border-bottom: 1;">{{ item.get_formatted("qty", 0) }} {{ item.uom }}</TD>
+	<TD style="text-align:right; border:1px solid blue; border-top: 1; border-bottom: 1;">{{ item.get_formatted("rate", doc) }}</TD>
+	<TD style="text-align:right; border:1px solid blue; border-top: 1; border-bottom: 1;">{{ item.get_formatted("amount", doc) }}</TD>
+
+</TR>
+{% endfor %}
+<tr>
+    <td style="text-align:center;" colspan="3"><b>Total</b></td><td style="text-align:center;"><b>{{ doc.get_formatted("total_qty", doc) }}</b></td><td></td><td style="text-align:right;"><b>{{ doc.get_formatted("base_net_total", doc) }}&nbsp;</b></td>
+    </tr>
+    </table>
+<table class="bottom-table" cellpadding=0 cellspacing=0 width=100% height=100% border=1 style="border:1px solid blue; font-family:Arial MT; font-size 10px; border-collapse: collapse;">
+{% if doc.taxes|length == 1 -%}
+<tr>
+    {%- for taxes in doc.taxes -%}
+    {% if loop.index == 1 -%}
+    <tr>
+        <td style="text-align:left;" rowspan=2 width=50%>
+        <b>Invoice Value in Words :</b> <br>{{ doc.base_in_words }}<br><b>E-Waybill Number :</b> {{ doc.ewaybill or "" }}&emsp;<b>E-Waybill Date : </b>{{ doc.get_formatted("posting_date", doc) }}<br><b>IRN NO.: </b> {{ doc.irn or "" }}<br><b>Account Name :</b> {{ doc.account_name }}<br><b>Bank Name :</b> {{ doc.bank_name }}&emsp; <b>Account Number :</b> {{ doc.bank_account_no }}<br><b>IFSC Code :</b> {{ doc.ifsc_code }}&emsp;</td><td style="text-align:right;"><b>{{ taxes.description }}</b></td><td width=15% style="text-align:right;">{{ taxes.get_formatted("tax_amount") }}&nbsp;</td>
+    </tr>
+    {%- else %}
+    <tr>
+    <td style="text-align:right;"><b>{{ taxes.description }}</b></td><td width=15% style="text-align:right;">{{ taxes.get_formatted("tax_amount") }}&nbsp;</td>
+    </tr>
+    {%- endif %}
+    {%- endfor -%}
+<tr>
+
+    <td style="text-align:right;"><b>Invoice Value </b></td>
+    <td width=15% style="text-align:right;"><b>{{ doc.get_formatted("base_rounded_total", doc) }}</b>&nbsp;</td>
+</tr>
+
+{% elif doc.taxes|length == 2 -%}
+<tr>
+    {%- for taxes in doc.taxes -%}
+    {% if loop.index == 1 -%}
+    <tr>
+        <td style="text-align:left;" rowspan=3 width=50%>
+        <b>Invoice Value in Words :</b> <br>{{ doc.base_in_words }}<br><b>E-Waybill Number :</b> {{ doc.ewaybill or "" }}&emsp;<b>E-Waybill Date : </b>{{ doc.get_formatted("posting_date", doc) }}<br><b>IRN NO.: </b> {{ doc.irn or "" }}<br><b>Account Name :</b> {{ doc.account_name }}<br><b>Bank Name :</b> {{ doc.bank_name }}&emsp; <b>Account Number :</b> {{ doc.bank_account_no }}<br><b>IFSC Code :</b> {{ doc.ifsc_code }}&emsp;</td><td style="text-align:right;"><b>{{ taxes.description }}</b></td><td style="text-align:right;" width=15%>{{ taxes.get_formatted("tax_amount") }}&nbsp;</td>
+    </tr>
+    {%- else %}
+    <tr>
+    <td style="text-align:right;"><b>{{ taxes.description }}</b></td><td style="text-align:right;" width=15%>{{ taxes.get_formatted("tax_amount") }}&nbsp;</td>
+    </tr>
+    {%- endif %}
+    {%- endfor -%}
+<tr>
+
+    <td style="text-align:right;"><b>Invoice Value </b></td>
+    <td width=15% style="text-align:right;"><b>{{ doc.get_formatted("base_rounded_total", doc) }}</b>&nbsp;</td>
+</tr>
+
+{% elif doc.taxes|length == 3 -%}
+<tr>
+    {%- for taxes in doc.taxes -%}
+    {% if loop.index == 1 -%}
+    <tr>
+        <td style="text-align:left;" rowspan=4 width=50%>
+        <b>Invoice Value in Words :</b> <br>{{ doc.base_in_words }}<br><b>E-Waybill Number :</b> {{ doc.ewaybill or "" }}&emsp;<b>E-Waybill Date : </b>{{ doc.get_formatted("posting_date", doc) }}<br><b>IRN NO.: </b> {{ doc.irn or "" }}<br><b>Account Name :</b> {{ doc.account_name }}<br><b>Bank Name :</b> {{ doc.bank_name }}&emsp; <b>Account Number :</b> {{ doc.bank_account_no }}<br><b>IFSC Code :</b> {{ doc.ifsc_code }}&emsp;</td><td style="text-align:right;"><b>{{ taxes.description }}</b></td><td style="text-align:right;" width=15%>{{ taxes.get_formatted("tax_amount") }}&nbsp;</td>
+    </tr>
+    {%- else %}
+    <tr>
+    <td style="text-align:right;"><b>{{ taxes.description }}</b></td><td width=15% style="text-align:right;">{{ taxes.get_formatted("tax_amount") }}&nbsp;</td>
+    </tr>
+    {%- endif %}
+    {%- endfor -%}
+<tr>
+
+    <td style="text-align:right;"><b>Invoice Value </b></td>
+    <td width=15% style="text-align:right;"><b>{{ doc.get_formatted("base_rounded_total", doc) }}</b>&nbsp;</td>
+</tr>
+{% else -%}
+<tr>
+    {%- for taxes in doc.taxes -%}
+    {% if loop.index == 1 -%}
+    <tr>
+        <td style="text-align:left;" rowspan=5 width=50%>
+        <b>Invoice Value in Words :</b> <br>{{ doc.base_in_words }}<br><b>E-Waybill Number :</b> {{ doc.ewaybill or "" }}&emsp;<b>E-Waybill Date : </b>{{ doc.get_formatted("posting_date", doc) }}<br><b>IRN NO.: </b> {{ doc.irn or "" }}<br><b>Account Name :</b> {{ doc.account_name }}<br><b>Bank Name :</b> {{ doc.bank_name }}&emsp; <b>Account Number :</b> {{ doc.bank_account_no }}<br><b>IFSC Code :</b> {{ doc.ifsc_code }}&emsp;</td><td style="text-align:right;"><b>{{ taxes.description }}</b></td><td style="text-align:right;" width=15%>{{ taxes.get_formatted("tax_amount") }}&nbsp;</td>
+    </tr>
+    {%- else %}
+    <tr>
+    <td style="text-align:right;"><b>{{ taxes.description }}</b></td><td style="text-align:right;" width=15%>{{ taxes.get_formatted("tax_amount") }}&nbsp;</td>
+    </tr>
+    {%- endif %}
+    {%- endfor -%}
+<tr>
+
+    <td style="text-align:right;"><b>Invoice Value </b></td>
+    <td style="text-align:right;" width=15%><b>{{ doc.get_formatted("base_rounded_total", doc) }}</b>&nbsp;</td>
+</tr>
+{%- endif %}
+
+<tr height=150><td style="text-align:left;" ><b>Terms and Conditions :</b><small style="font-size:8px; font-family:Arial MT;"><br> {{ doc.terms or "" }}</small></td><td style="text-align:center; font-size:12px" colspan=2><b>For AVH Polychem Private Limited</b><br><img src="/files/JBG Sign.bmp" style="vertical-align: top;" width=35%><br><b>Authorised Signatory</b></td></tr>
+</table>    
+    
+
+
